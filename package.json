@@ -59,6 +59,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "preview": "npm run prebuild && opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "start": "next start"
+    "start": "next start",
+    "upload-docs": "node scripts/upload-docs-to-r2.js"
   }
 }

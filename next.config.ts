@@ -6,10 +6,6 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   
-  // Output type for Cloudflare Workers
-  // Note: 'export' is deprecated in Next.js 15+
-  output: undefined,
-  
   // For better URL handling
   trailingSlash: false,
   
