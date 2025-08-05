@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Cloudflare Pages doesn't support image optimization
+  images: {
+    unoptimized: true,
+  },
+  
+  // Generate index.html files for each route
+  trailingSlash: true,
 };
 
 export default nextConfig;
