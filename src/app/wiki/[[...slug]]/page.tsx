@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getDocBySlug, getDocSlugs, getDocsTree } from '@/lib/docs';
+import { getDocBySlug, getDocSlugs } from '@/lib/docs';
+import { getDocsTreeStatic } from '@/lib/docs-static';
 import { markdownToHtml } from '@/lib/markdown';
 import { WikiLayout } from '@/components/wiki-layout';
 
@@ -27,7 +28,7 @@ export default async function WikiPage({ params }: PageProps) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug || ['index'];
   const doc = await getDocBySlug(slug);
-  const tree = getDocsTree();
+  const tree = getDocsTreeStatic();
 
   if (!doc) {
     notFound();
