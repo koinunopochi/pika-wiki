@@ -52,12 +52,21 @@ export async function getDocBySlug(slug: string[]): Promise<DocContent | null> {
   }
 }
 
-export function getDocsTree(): any {
-  const buildTree = (dirPath: string = ''): any => {
+interface TreeItem {
+  name: string;
+  path: string;
+  type: 'file' | 'directory';
+  title?: string;
+  order?: number;
+  children?: TreeItem[];
+}
+
+export function getDocsTree(): TreeItem[] {
+  const buildTree = (dirPath: string = ''): TreeItem[] => {
     const fullPath = path.join(docsDirectory, dirPath);
     const entries = fs.readdirSync(fullPath, { withFileTypes: true });
     
-    const items = [];
+    const items: TreeItem[] = [];
     
     for (const entry of entries) {
       if (entry.isDirectory()) {
@@ -73,21 +82,26 @@ export function getDocsTree(): any {
       } else if (entry.name.endsWith('.md')) {
         const slug = entry.name.replace(/\.md$/, '');
         const fullSlug = dirPath ? path.join(dirPath, slug).split(path.sep) : [slug];
-        const doc = getDocBySlug(fullSlug);
         
-        if (doc) {
+        try {
+          const fullPath = path.join(docsDirectory, ...fullSlug) + '.md';
+          const fileContents = fs.readFileSync(fullPath, 'utf8');
+          const { data } = matter(fileContents);
+          
           items.push({
             name: slug,
             path: path.join(dirPath, slug),
             type: 'file',
-            title: doc.title,
-            order: doc.order,
+            title: data.title || slug.replace(/-/g, ' '),
+            order: data.order,
           });
+        } catch {
+          // Skip files that can't be read
         }
       }
     }
     
-    return items.sort((a: any, b: any) => {
+    return items.sort((a: TreeItem, b: TreeItem) => {
       // Sort by order if available, then by name
       if (a.order !== undefined && b.order !== undefined) {
         return a.order - b.order;

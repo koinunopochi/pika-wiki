@@ -13,7 +13,15 @@ import { WikiSidebar } from './wiki-sidebar';
 import { useState } from 'react';
 
 interface MobileSidebarProps {
-  tree: any[];
+  tree: DocItem[];
+}
+
+interface DocItem {
+  name: string;
+  path: string;
+  type: 'file' | 'directory';
+  title?: string;
+  children?: DocItem[];
 }
 
 export function MobileSidebar({ tree }: MobileSidebarProps) {
