@@ -1,22 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Cloudflare Pages doesn't support image optimization
+  // Cloudflare doesn't support image optimization
   images: {
     unoptimized: true,
   },
   
-  // For Cloudflare Pages compatibility
+  // Output type for Cloudflare Workers
+  // Note: 'export' is deprecated in Next.js 15+
+  output: undefined,
+  
+  // For better URL handling
   trailingSlash: false,
   
-  // Skip TypeScript errors during build
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  
-  // Skip ESLint during build
-  eslint: {
-    ignoreDuringBuilds: true,
+  // Ensure proper static generation
+  generateBuildId: async () => {
+    return 'pika-wiki-build';
   },
 };
 
