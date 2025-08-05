@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 md:h-16 items-center justify-between px-4 md:px-6">
+        <div className="flex h-14 md:h-16 items-center justify-between px-4 md:px-6 mx-auto max-w-7xl w-full">
           <h1 className="text-lg md:text-xl font-bold flex items-center gap-2">
             <span className="text-2xl">🐾</span>
             Pika Wiki
@@ -39,8 +39,8 @@ export default function Home() {
       </header>
       
       <main className="flex-1">
-        <section className="container px-4 py-12 md:py-24">
-          <div className="mx-auto max-w-3xl text-center">
+        <section className="px-4 py-12 md:py-24">
+          <div className="mx-auto max-w-4xl text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-5xl md:text-6xl">
               Pika Documentation
             </h2>
@@ -50,7 +50,7 @@ export default function Home() {
             </p>
             <div className="mt-8 md:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link href="/wiki">
+                <Link href="/wiki/index">
                   <BookOpen className="mr-2 h-5 w-5" />
                   Read Documentation
                 </Link>
@@ -70,8 +70,8 @@ export default function Home() {
         </section>
 
         <section className="border-t py-12 md:py-16">
-          <div className="container px-4">
-            <div className="mx-auto max-w-3xl">
+          <div className="px-4">
+            <div className="mx-auto max-w-4xl">
               <h3 className="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Features</h3>
               <div className="grid gap-4 md:gap-6 sm:grid-cols-2 md:grid-cols-3">
                 <div className="rounded-lg border p-4 md:p-6 bg-card">
@@ -102,7 +102,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t py-4 md:py-6">
-        <div className="container px-4 text-center text-xs md:text-sm text-muted-foreground">
+        <div className="px-4 text-center text-xs md:text-sm text-muted-foreground">
           <p>Built with Next.js and deployed on Cloudflare Workers</p>
         </div>
       </footer>
