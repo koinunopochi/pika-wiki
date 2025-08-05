@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getDocBySlug, getDocSlugs } from '@/lib/docs';
-import { getDocsTreeStatic } from '@/lib/docs-static';
+import { getDocFromR2, getDocsTreeFromR2 } from '@/lib/r2-docs';
 import { markdownToHtml } from '@/lib/markdown';
 import { WikiLayout } from '@/components/wiki-layout';
 
@@ -10,26 +9,15 @@ interface PageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  const slugs = getDocSlugs();
-  
-  // Include the index page and all document slugs
-  const allParams = [
-    { slug: undefined }, // for /wiki route
-    { slug: [] }, // for /wiki route (alternative)
-    ...slugs.map((slug) => ({
-      slug,
-    }))
-  ];
-  
-  return allParams;
-}
+// Dynamic rendering to fetch from R2
+export const dynamic = 'force-dynamic';
 
 export default async function WikiPage({ params }: PageProps) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug || ['index'];
-  const doc = await getDocBySlug(slug);
-  const tree = getDocsTreeStatic();
+  
+  const doc = await getDocFromR2(slug);
+  const tree = await getDocsTreeFromR2();
 
   if (!doc) {
     notFound();
