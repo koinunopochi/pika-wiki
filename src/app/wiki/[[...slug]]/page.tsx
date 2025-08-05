@@ -13,9 +13,10 @@ interface PageProps {
 export async function generateStaticParams() {
   const slugs = getDocSlugs();
   
-  // Include the index page
+  // Include the index page and all document slugs
   const allParams = [
-    { slug: [] }, // for /wiki route
+    { slug: undefined }, // for /wiki route
+    { slug: [] }, // for /wiki route (alternative)
     ...slugs.map((slug) => ({
       slug,
     }))
