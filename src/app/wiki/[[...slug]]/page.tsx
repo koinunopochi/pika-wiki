@@ -4,9 +4,9 @@ import { markdownToHtml } from '@/lib/markdown';
 import { WikiLayout } from '@/components/wiki-layout';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug?: string[];
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -24,8 +24,8 @@ export async function generateStaticParams() {
 }
 
 export default async function WikiPage({ params }: PageProps) {
-  const { slug: paramSlug } = await params;
-  const slug = paramSlug || ['index'];
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug || ['index'];
   const doc = await getDocBySlug(slug);
   const tree = getDocsTree();
 

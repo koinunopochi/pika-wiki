@@ -1,13 +1,20 @@
 import { WikiSidebar } from './wiki-sidebar';
-import { Separator } from '@/components/ui/separator';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { MobileSidebar } from './mobile-sidebar';
 import { Github, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+interface DocItem {
+  name: string;
+  path: string;
+  type: 'file' | 'directory';
+  title?: string;
+  children?: DocItem[];
+}
+
 interface WikiLayoutProps {
   children: React.ReactNode;
-  tree: any[];
+  tree: DocItem[];
 }
 
 export function WikiLayout({ children, tree }: WikiLayoutProps) {
