@@ -6,10 +6,12 @@
   "name": "pika-wiki",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-04-01",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public", "assets_navigation_prefers_asset_serving"],
   "assets": {
     "binding": "ASSETS",
-    "directory": ".open-next/assets"
+    "directory": ".open-next/assets",
+    "not_found_handling": "single-page-application",
+    "html_handling": "auto-trailing-slash"
   },
   "observability": {
     "enabled": true
