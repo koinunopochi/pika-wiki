@@ -59,6 +59,6 @@
     "lint": "next lint",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "start": "next start",
-    "upload-docs": "node scripts/upload-docs-to-r2.js"
+    "upload": "node scripts/upload-to-r2.js"
   }
 }

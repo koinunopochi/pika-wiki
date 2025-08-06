@@ -1,14 +1,57 @@
-# Next.js Framework Starter
+# Pika Wiki
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/next-starter-template)
+Pikaツールの公式Wikiサイトです。
 
-<!-- dash-content-start -->
+## 概要
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It's deployed on Cloudflare Workers as a [static website](https://developers.cloudflare.com/workers/static-assets/).
+このプロジェクトはPikaツールのドキュメントを提供するWikiサイトです。Cloudflare WorkersとR2を使用して構築されています。
 
-This template uses [OpenNext](https://opennext.js.org/) via the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare), which works by taking the Next.js build output and transforming it, so that it can run in Cloudflare Workers.
+## 主な機能
 
-<!-- dash-content-end -->
+- ドキュメントの閲覧
+- Markdownベースのコンテンツ管理
+- Pikaツール向けのお知らせAPI
+
+## API
+
+### お知らせAPI
+
+Pikaツールが定期的にお知らせを取得するためのAPIエンドポイントを提供しています。
+
+```
+GET /api/tools/announcements
+```
+
+**特徴**:
+- 過去30日以内のお知らせのみを返却（リソース節約のため）
+- 複数のリンクを各お知らせに設定可能
+- 優先度に応じた分類（info/warning/critical）
+
+レスポンス例:
+```json
+{
+  "tool": "pika",
+  "announcements": [
+    {
+      "id": "ann-2025-01-15",
+      "title": "新バージョン1.2.0リリースのお知らせ",
+      "content": "pikaツール バージョン1.2.0をリリースしました。タスク管理機能の追加やパフォーマンスの改善を行いました。",
+      "date": "2025-01-15",
+      "priority": "info",
+      "links": [
+        {
+          "url": "https://pika-wiki.example.com/wiki/releases/v1.2.0",
+          "text": "リリースノート"
+        },
+        {
+          "url": "https://github.com/pika/pika/releases/tag/v1.2.0",
+          "text": "GitHubリリース"
+        }
+      ]
+    }
+  ]
+}
+```
 
 Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
 
