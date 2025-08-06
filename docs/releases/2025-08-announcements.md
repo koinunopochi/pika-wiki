@@ -1,10 +1,12 @@
-# In-Browser Editing & Announcement System リリース
+# In-Browser Editing & Announcement System リリース β版
 
 2025年8月7日
 
 ## 概要
 
 pikaに2つの革新的な機能を追加しました。ブラウザ内でのMarkdown編集機能と、自動通知システムです。これらの機能により、ドキュメント管理がより効率的で使いやすくなります。
+
+今後フロントはReactに置き換えていく予定であるため、デザインの崩れなどに関しては目を瞑っていただければと思います。
 
 ## 新機能
 
