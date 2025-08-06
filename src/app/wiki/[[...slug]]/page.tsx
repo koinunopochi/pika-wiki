@@ -29,7 +29,6 @@ export default async function WikiPage({ params }: PageProps) {
     <WikiLayout tree={tree}>
       <div className="mx-auto max-w-4xl">
         <article className="prose prose-slate dark:prose-invert">
-          <h1>{doc.title}</h1>
           {doc.description && (
             <p className="text-xl text-muted-foreground">{doc.description}</p>
           )}

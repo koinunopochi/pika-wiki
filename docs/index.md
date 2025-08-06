@@ -1,4 +1,4 @@
-## Pika 🐾
+# Pika 🐾
 
 A lightning-fast local document viewer for Markdown, HTML, and more - peek at your files like a pika!
 
