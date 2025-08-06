@@ -44,6 +44,79 @@ function uploadDirectory(dirPath, prefix = '') {
   }
 }
 
+// Generate and upload metadata
+function generateAndUploadMetadata() {
+  console.log('\n📋 Generating metadata...');
+  
+  const docsDirectory = path.join(process.cwd(), 'docs');
+  
+  function buildTree(dirPath, basePath = '') {
+    const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+    const tree = [];
+    
+    for (const entry of entries) {
+      const fullPath = path.join(dirPath, entry.name);
+      const relativePath = basePath ? path.join(basePath, entry.name) : entry.name;
+      
+      if (entry.isDirectory()) {
+        // Skip announcements directory as it's internal data
+        if (entry.name === 'announcements') continue;
+        
+        const children = buildTree(fullPath, relativePath);
+        if (children.length > 0) {
+          tree.push({
+            name: entry.name,
+            path: relativePath,
+            type: 'directory',
+            children: children
+          });
+        }
+      } else if (entry.name.endsWith('.md')) {
+        const name = entry.name.replace(/\.md$/, '');
+        
+        // Read file to extract title from first H1
+        const content = fs.readFileSync(fullPath, 'utf-8');
+        let title = name.replace(/-/g, ' ');
+        
+        // Try to extract title from first H1
+        const h1Match = content.match(/^#\s+(.+)$/m);
+        if (h1Match) {
+          title = h1Match[1];
+        }
+        
+        tree.push({
+          name: name,
+          path: relativePath.replace(/\.md$/, ''),
+          type: 'file',
+          title: title
+        });
+      }
+    }
+    
+    // Sort directories first, then files
+    tree.sort((a, b) => {
+      if (a.type !== b.type) {
+        return a.type === 'directory' ? -1 : 1;
+      }
+      return a.name.localeCompare(b.name);
+    });
+    
+    return tree;
+  }
+  
+  const metadata = buildTree(docsDirectory);
+  const metadataPath = path.join(process.cwd(), 'metadata.json');
+  
+  fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+  
+  // Upload metadata
+  uploadFile(metadataPath, 'metadata.json');
+  
+  // Cleanup
+  fs.unlinkSync(metadataPath);
+  console.log('✅ Metadata generated and uploaded');
+}
+
 console.log(`📦 Uploading to R2 bucket: ${BUCKET_NAME}`);
 console.log('=====================================\n');
 
@@ -60,5 +133,8 @@ if (fs.existsSync(dataDirectory)) {
   console.log('\n📊 Uploading data files...');
   uploadDirectory(dataDirectory, 'data');
 }
+
+// Generate and upload metadata
+generateAndUploadMetadata();
 
 console.log('\n✨ All files uploaded successfully!');
