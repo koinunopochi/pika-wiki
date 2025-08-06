@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getAnnouncements } from '@/lib/announcements';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Get announcements data
     const announcements = await getAnnouncements();
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Handle OPTIONS for CORS
-export async function OPTIONS(request: NextRequest) {
+export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
     headers: {

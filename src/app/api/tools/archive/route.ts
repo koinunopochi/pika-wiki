@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { archiveOldAnnouncements } from '@/lib/announcements';
 
 // Archive announcements older than 30 days
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const success = await archiveOldAnnouncements();
     
